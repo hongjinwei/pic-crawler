@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 import com.peony.util.StringUtils;
 import com.peony.util.http.HttpQuery;
 import com.poeny.pic_crawler.core.baidu.BaiduPicCrawlerTasks;
+import com.poeny.pic_crawler.core.wangyi.WangyiCrawlerTasks;
 import com.poeny.pic_crawler.core.wangyi.WangyiPicCrawler;
-import com.poeny.pic_crawler.core.wangyi.model.WangyiCrawlerTasks;
 import com.poeny.pic_crawler.model.Task;
 
 public class WangyiColumnPicCrawlerTasks extends WangyiCrawlerTasks {
@@ -80,13 +80,13 @@ public class WangyiColumnPicCrawlerTasks extends WangyiCrawlerTasks {
 		}
 	}
 
-	@Override
-	public void runTasks(int threadNumber) {
-		ExecutorService threadPool = Executors.newFixedThreadPool(threadNumber);
-		for (int i = 0; i < threadNumber; i++) {
-			threadPool.submit(new WangyiPicCrawler(this));
-		}
-	}
+//	@Override
+//	public void runTasks(int threadNumber) {
+//		ExecutorService threadPool = Executors.newFixedThreadPool(threadNumber);
+//		for (int i = 0; i < threadNumber; i++) {
+//			threadPool.submit(new WangyiPicCrawler(this));
+//		}
+//	}
 
 	public static WangyiColumnPicCrawlerTasks createTasks(String keyword, int picPage) {
 		LOGGER.info("开始任务 ： 网易摄影  " + keyword);

@@ -133,9 +133,9 @@ public class CommonUtils {
 			byte[] content = HttpQuery.getInstance().get(url).getContent();
 			StmUtils.copy(new ByteArrayInputStream(content), new FileOutputStream(new File(filename)));
 		} catch (BaseHttpException e) {
-			throw new Exception(e.getMessage());
+			throw new Exception(e.getMessage() + "url :" + pic.getUrl());
 		} catch (IOException e) {
-			throw new Exception(e.getMessage());
+			throw new Exception(e.getMessage() + "url :" + pic.getUrl());
 		}
 	}
 

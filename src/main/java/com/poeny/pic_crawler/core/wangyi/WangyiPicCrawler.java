@@ -14,7 +14,6 @@ import com.peony.util.http.HttpQuery;
 import com.poeny.pic_crawler.common.CommonUtils;
 import com.poeny.pic_crawler.common.PicCrawler;
 import com.poeny.pic_crawler.common.PicCrawlerTasks;
-import com.poeny.pic_crawler.core.wangyi.model.WangyiCrawlerTasks;
 import com.poeny.pic_crawler.model.Picture;
 import com.poeny.pic_crawler.model.Task;
 

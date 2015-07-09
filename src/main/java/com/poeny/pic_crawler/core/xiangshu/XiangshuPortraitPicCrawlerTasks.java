@@ -14,7 +14,9 @@ import com.peony.util.StringUtils;
 import com.peony.util.http.BaseHttpException;
 import com.peony.util.http.HttpQuery;
 import com.poeny.pic_crawler.common.CommonUtils;
+import com.poeny.pic_crawler.common.PicCrawler;
 import com.poeny.pic_crawler.common.PicCrawlerTasks;
+import com.poeny.pic_crawler.core.xingchen.XingchenPicCrawler;
 import com.poeny.pic_crawler.model.Task;
 
 public class XiangshuPortraitPicCrawlerTasks extends PicCrawlerTasks {
@@ -79,26 +81,28 @@ public class XiangshuPortraitPicCrawlerTasks extends PicCrawlerTasks {
 		}
 	}
 
-	@Override
-	public void runTasks(int threadNumber) {
-		ExecutorService threadPool = Executors.newFixedThreadPool(threadNumber);
-		for (int i = 0; i < threadNumber; i++) {
-			threadPool.submit(new XiangshuPicCrawler(this));
-		}
-	}
+//	@Override
+//	public void runTasks(int threadNumber) {
+//		ExecutorService threadPool = Executors.newFixedThreadPool(threadNumber);
+//		for (int i = 0; i < threadNumber; i++) {
+//			threadPool.submit(new XiangshuPicCrawler(this));
+//		}
+//	}
 
+	protected PicCrawler newPicCrawler() {
+		return new XiangshuPicCrawler(this);
+	}
+	
 	public static XiangshuPortraitPicCrawlerTasks createTasks(int pageNumber) {
-		LOGGER.info("开始任务 ： 橡树摄影  人像摄影");
 		XiangshuPortraitPicCrawlerTasks instance = new XiangshuPortraitPicCrawlerTasks("人像摄影", pageNumber, "橡树摄影");
 		instance.init(10, pageNumber);
 		return instance;
 	}
 
 	public static XiangshuPortraitPicCrawlerTasks createTasks() {
-		LOGGER.info("开始任务 ： 橡树摄影  人像摄影");
 		XiangshuPortraitPicCrawlerTasks instance = new XiangshuPortraitPicCrawlerTasks("人像摄影", -1, "橡树摄影");
 		int pageNumber = instance.parsePageNumber(homeUrl);
-		instance.init(instance.getInitThreadNumber(), pageNumber);
+		instance.init(instance.getDefaultInitThreadNumber(), pageNumber);
 		return instance;
 	}
 

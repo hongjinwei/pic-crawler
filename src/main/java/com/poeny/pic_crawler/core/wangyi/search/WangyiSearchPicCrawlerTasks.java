@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 
 import com.peony.util.http.HttpQuery;
 import com.poeny.pic_crawler.core.baidu.BaiduPicCrawlerTasks;
+import com.poeny.pic_crawler.core.wangyi.WangyiCrawlerTasks;
 import com.poeny.pic_crawler.core.wangyi.WangyiPicCrawler;
-import com.poeny.pic_crawler.core.wangyi.model.WangyiCrawlerTasks;
 import com.poeny.pic_crawler.model.Task;
 
 public class WangyiSearchPicCrawlerTasks extends WangyiCrawlerTasks {
@@ -57,12 +57,12 @@ public class WangyiSearchPicCrawlerTasks extends WangyiCrawlerTasks {
 		}
 	}
 
-	public void runTasks(int threadNumber) {
-		ExecutorService threadPool = Executors.newFixedThreadPool(threadNumber);
-		for (int i = 0; i < threadNumber; i++) {
-			threadPool.submit(new WangyiPicCrawler(this));
-		}
-	}
+//	public void runTasks(int threadNumber) {
+//		ExecutorService threadPool = Executors.newFixedThreadPool(threadNumber);
+//		for (int i = 0; i < threadNumber; i++) {
+//			threadPool.submit(new WangyiPicCrawler(this));
+//		}
+//	}
 
 	@Override
 	public String formatPageUrl(int i) {
@@ -73,7 +73,7 @@ public class WangyiSearchPicCrawlerTasks extends WangyiCrawlerTasks {
 	public static WangyiSearchPicCrawlerTasks createTasks(String keyword, int picPage) {
 		LOGGER.info("开始任务 ： 网易摄影  " + keyword);
 		WangyiSearchPicCrawlerTasks instance = new WangyiSearchPicCrawlerTasks(keyword, picPage, "网易摄影");
-		int threadNumber = instance.getInitThreadNumber();
+		int threadNumber = instance.getDefaultInitThreadNumber();
 		instance.init(threadNumber, picPage);
 		return instance;
 	}
@@ -82,7 +82,7 @@ public class WangyiSearchPicCrawlerTasks extends WangyiCrawlerTasks {
 		LOGGER.info("开始任务 ： 网易摄影  " + keyword);
 		WangyiSearchPicCrawlerTasks instance = new WangyiSearchPicCrawlerTasks(keyword, -1, "网易摄影");
 		int picPage = instance.parsePageNumber(instance.getUrl(), "class", "pgi iblock");
-		int threadNumber = instance.getInitThreadNumber();
+		int threadNumber = instance.getDefaultInitThreadNumber();
 		instance.init(threadNumber, picPage);
 		return instance;
 	}

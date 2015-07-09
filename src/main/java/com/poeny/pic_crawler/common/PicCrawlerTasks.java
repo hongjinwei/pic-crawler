@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.poeny.pic_crawler.core.dipai.DipaiPicCrawler;
 import com.poeny.pic_crawler.core.xiangshu.XiangshuPicCrawler;
+import com.poeny.pic_crawler.core.xingchen.XingchenPicCrawler;
 import com.poeny.pic_crawler.model.CrawlerTasks;
 import com.poeny.pic_crawler.model.Task;
 
@@ -76,10 +77,24 @@ public abstract class PicCrawlerTasks implements CrawlerTasks {
 	 * 
 	 * @return
 	 */
-	protected int getInitThreadNumber() {
+	protected int getDefaultInitThreadNumber() {
 		return 5;
 	}
 
+	abstract protected PicCrawler newPicCrawler();
+	
+	@Override
+	public void runTasks(int threadNumber) {
+		ExecutorService threadPool = Executors.newFixedThreadPool(threadNumber);
+		for (int i = 0; i < threadNumber; i++) {
+			threadPool.submit(newPicCrawler());
+		}
+	}
+	
+	/**
+	 * @param threadNumber 初始化线程数目
+	 * @param pageNumber 页数
+	 */
 	protected void init(int threadNumber, int pageNumber) {
 		LOGGER.info("开始创建任务 ：" + this.webSite + this.keyword);
 		LOGGER.info("页数：" + pageNumber);

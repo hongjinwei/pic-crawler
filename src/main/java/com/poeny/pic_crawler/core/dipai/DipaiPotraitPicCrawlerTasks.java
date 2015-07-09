@@ -12,8 +12,10 @@ import org.slf4j.LoggerFactory;
 
 import com.peony.util.StringUtils;
 import com.peony.util.http.HttpQuery;
+import com.poeny.pic_crawler.common.PicCrawler;
 import com.poeny.pic_crawler.common.PicCrawlerTasks;
 import com.poeny.pic_crawler.core.xiangshu.XiangshuPicCrawler;
+import com.poeny.pic_crawler.core.xingchen.XingchenPicCrawler;
 import com.poeny.pic_crawler.model.Picture;
 import com.poeny.pic_crawler.model.Task;
 
@@ -41,7 +43,7 @@ public class DipaiPotraitPicCrawlerTasks extends PicCrawlerTasks {
 	@Override
 	public void addTasks(String url) {
 		try {
-			String html = HttpQuery.getInstance().get(homeUrl).asString();
+			String html = HttpQuery.getInstance().get(url).asString();
 			Document doc = Jsoup.parse(html);
 			Element ele = doc.getElementsByAttributeValue("class", "Topic_List").select("tbody").get(0);
 			Elements elements = ele.getElementsByAttributeValue("class", "Topic_Title_Item").select("tr");
@@ -65,12 +67,16 @@ public class DipaiPotraitPicCrawlerTasks extends PicCrawlerTasks {
 		}
 	}
 
-	@Override
-	public void runTasks(int threadNumber) {
-		ExecutorService threadPool = Executors.newFixedThreadPool(threadNumber);
-		for (int i = 0; i < threadNumber; i++) {
-			threadPool.submit(new DipaiPicCrawler(this));
-		}
+//	@Override
+//	public void runTasks(int threadNumber) {
+//		ExecutorService threadPool = Executors.newFixedThreadPool(threadNumber);
+//		for (int i = 0; i < threadNumber; i++) {
+//			threadPool.submit(new DipaiPicCrawler(this));
+//		}
+//	}
+
+	protected PicCrawler newPicCrawler() {
+		return new DipaiPicCrawler(this);
 	}
 
 	@Override
@@ -80,14 +86,14 @@ public class DipaiPotraitPicCrawlerTasks extends PicCrawlerTasks {
 
 	public static DipaiPotraitPicCrawlerTasks createTasks(int picPage) {
 		DipaiPotraitPicCrawlerTasks instance = new DipaiPotraitPicCrawlerTasks("人像摄影", picPage, "迪派摄影");
-		instance.init(instance.getInitThreadNumber(), picPage);
+		instance.init(instance.getDefaultInitThreadNumber(), picPage);
 		return instance;
 	}
 
 	public static DipaiPotraitPicCrawlerTasks createTasks() {
 		int pageNumber = parsePageNumber();
 		DipaiPotraitPicCrawlerTasks instance = new DipaiPotraitPicCrawlerTasks("人像摄影", pageNumber, "迪派摄影");
-		instance.init(instance.getInitThreadNumber(), pageNumber);
+		instance.init(instance.getDefaultInitThreadNumber(), pageNumber);
 		return instance;
 	}
 

@@ -28,6 +28,11 @@ public class Task {
 	 */
 	private String type;
 
+	/**
+	 * 存储id
+	 */
+	private String albumId;
+	
 	public Task(String url, String keyword, int width, int height) {
 		super();
 		this.url = url;
@@ -89,6 +94,14 @@ public class Task {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getAlbumId() {
+		return albumId;
+	}
+
+	public void setAlbumId(String id) {
+		this.albumId = id;
 	}
 
 }

@@ -11,7 +11,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.peony.util.http.BaseHttpException;
 import com.peony.util.http.HttpQuery;
+import com.poeny.pic_crawler.common.PicCrawler;
 import com.poeny.pic_crawler.common.PicCrawlerTasks;
+import com.poeny.pic_crawler.core.dipai.DipaiPicCrawler;
 
 public class BaiduPicCrawlerTasks extends PicCrawlerTasks {
 
@@ -90,12 +92,12 @@ public class BaiduPicCrawlerTasks extends PicCrawlerTasks {
 		}
 	}
 
-	@Override
-	// TODO
-	public void runTasks(int threadNumber) {
 
-	}
-
+	//TODO
+	protected PicCrawler newPicCrawler() {
+		return null;
+	}	
+	
 	public static BaiduPicCrawlerTasks createTasks(String queryWord, int picNumber) {
 		BaiduPicCrawlerTasks instance = new BaiduPicCrawlerTasks(queryWord, picNumber, "百度图片");
 		return instance;

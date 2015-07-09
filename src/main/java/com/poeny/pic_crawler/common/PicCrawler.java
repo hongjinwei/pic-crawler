@@ -47,10 +47,7 @@ public abstract class PicCrawler implements Crawler {
 		this.interval = (interval <= 0) ? 1 : interval;
 	}
 
-	protected List<Picture> getPictures(Task task) {
-		LOGGER.error(taskInfo + "没有实现getPictures!!!");
-		return null;
-	}
+	protected abstract List<Picture> getPictures(Task task);
 
 	protected void downloadPic(List<Picture> picLists) {
 		String workdir = SystemProperty.getWorkDir();
@@ -91,7 +88,7 @@ public abstract class PicCrawler implements Crawler {
 	public void run() {
 		String workdir = SystemProperty.getWorkDir();
 		for (;;) {
-			List<Task> tasks = crawlerTasks.pollTasks(2);
+			List<Task> tasks = crawlerTasks.pollTasks(this.taskNumberForEach);
 			LOGGER.info(taskInfo + "已经没有task！");
 			if (tasks.size() == 0) {
 				try {
@@ -103,7 +100,7 @@ public abstract class PicCrawler implements Crawler {
 				for (Task task : tasks) {
 					LOGGER.info(taskInfo + " 开始爬取 ：" + task.getUrl());
 					craw(task, workdir);
-					TimerUtils.delayForSeconds(1);
+					TimerUtils.delayForSeconds(this.interval);
 				}
 				LOGGER.info(taskInfo + " 还有" + crawlerTasks.getTaskSize() + "个task");
 			}

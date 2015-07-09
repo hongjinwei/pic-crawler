@@ -1,4 +1,4 @@
-package com.poeny.pic_crawler.core.wangyi.model;
+package com.poeny.pic_crawler.core.wangyi;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 
 import com.peony.util.http.HttpQuery;
 import com.poeny.pic_crawler.common.CommonUtils;
+import com.poeny.pic_crawler.common.PicCrawler;
 import com.poeny.pic_crawler.common.PicCrawlerTasks;
+import com.poeny.pic_crawler.core.xingchen.XingchenPicCrawler;
 
 public abstract class WangyiCrawlerTasks extends PicCrawlerTasks {
 
@@ -29,6 +31,10 @@ public abstract class WangyiCrawlerTasks extends PicCrawlerTasks {
 		}
 	}
 
+	protected PicCrawler newPicCrawler() {
+		return new XingchenPicCrawler(this);
+	}
+	
 	protected int parsePageNumber(String url, String attr, String value) {
 		try {
 			String html = HttpQuery.getInstance().get(url).asString();

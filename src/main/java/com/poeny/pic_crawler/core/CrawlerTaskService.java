@@ -4,6 +4,8 @@ import com.poeny.pic_crawler.core.dipai.DipaiPotraitPicCrawlerTasks;
 import com.poeny.pic_crawler.core.wangyi.column.WangyiColumnPicCrawlerTasks;
 import com.poeny.pic_crawler.core.wangyi.search.WangyiSearchPicCrawlerTasks;
 import com.poeny.pic_crawler.core.xiangshu.XiangshuPortraitPicCrawlerTasks;
+import com.poeny.pic_crawler.core.xingchen.XingchenPicCrawler;
+import com.poeny.pic_crawler.core.xingchen.XingchenPicCrawlerTasks;
 
 public class CrawlerTaskService {
 	private static CrawlerTaskService instance = new CrawlerTaskService();
@@ -39,6 +41,11 @@ public class CrawlerTaskService {
 		tasks.runTasks(threadNumber);
 	}
 
+	private static void runXiangshu(int threadNumber, int page) {
+		XiangshuPortraitPicCrawlerTasks tasks = XiangshuPortraitPicCrawlerTasks.createTasks(page);
+		tasks.runTasks(threadNumber);
+	}
+
 	private static void runDipai(int threadNumber) {
 		DipaiPotraitPicCrawlerTasks tasks = DipaiPotraitPicCrawlerTasks.createTasks();
 		tasks.runTasks(threadNumber);
@@ -48,11 +55,22 @@ public class CrawlerTaskService {
 		DipaiPotraitPicCrawlerTasks tasks = DipaiPotraitPicCrawlerTasks.createTasks(page);
 		tasks.runTasks(threadNumber);
 	}
+	
+	private static void runXingchen(int threadNumber , int page) {
+		XingchenPicCrawlerTasks tasks = XingchenPicCrawlerTasks.createTasks("人像", 1);
+		tasks.runTasks(threadNumber);
+	}
+	
+	private static void runXingchen(int threadNumber) {
+		XingchenPicCrawlerTasks tasks = XingchenPicCrawlerTasks.createTasks("人像");
+		tasks.runTasks(threadNumber);
+	}
 
 	public static void start() {
-		// runXiangshu(threadNumber);
-		// runWangyiSearch(threadNumber);
-		// runWangyiColumn(threadNumber);
-		runDipai(threadNumber, 1);
+//		runXiangshu(threadNumber, 1);
+//		runWangyiSearch(threadNumber, 1);
+//		runWangyiColumn(threadNumber, 1);
+//		runDipai(threadNumber, 1);
+		runXingchen(threadNumber, 1);
 	}
 }
