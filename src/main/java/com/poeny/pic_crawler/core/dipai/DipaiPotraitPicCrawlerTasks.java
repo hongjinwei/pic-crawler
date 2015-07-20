@@ -67,14 +67,6 @@ public class DipaiPotraitPicCrawlerTasks extends PicCrawlerTasks {
 		}
 	}
 
-//	@Override
-//	public void runTasks(int threadNumber) {
-//		ExecutorService threadPool = Executors.newFixedThreadPool(threadNumber);
-//		for (int i = 0; i < threadNumber; i++) {
-//			threadPool.submit(new DipaiPicCrawler(this));
-//		}
-//	}
-
 	protected PicCrawler newPicCrawler() {
 		return new DipaiPicCrawler(this);
 	}

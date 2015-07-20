@@ -1,6 +1,7 @@
 package com.poeny.pic_crawler.core;
 
 import com.poeny.pic_crawler.core.dipai.DipaiPotraitPicCrawlerTasks;
+import com.poeny.pic_crawler.core.fengniao.FengniaobbsPicCrawlerTasks;
 import com.poeny.pic_crawler.core.wangyi.column.WangyiColumnPicCrawlerTasks;
 import com.poeny.pic_crawler.core.wangyi.search.WangyiSearchPicCrawlerTasks;
 import com.poeny.pic_crawler.core.xiangshu.XiangshuPortraitPicCrawlerTasks;
@@ -66,11 +67,18 @@ public class CrawlerTaskService {
 		tasks.runTasks(threadNumber);
 	}
 
+	private static void runFengniao() {
+		FengniaobbsPicCrawlerTasks tasks = FengniaobbsPicCrawlerTasks.createTasks("人像", 0, "蜂鸟摄影");
+		tasks.runTasks(10);
+		tasks.init(0, 0);
+	}
+	
 	public static void start() {
 //		runXiangshu(threadNumber, 1);
 //		runWangyiSearch(threadNumber, 1);
 //		runWangyiColumn(threadNumber, 1);
 //		runDipai(threadNumber, 1);
-		runXingchen(threadNumber, 1);
+//		runXingchen(threadNumber);
+		runFengniao();
 	}
 }
